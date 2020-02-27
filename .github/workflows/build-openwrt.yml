@@ -86,7 +86,7 @@ jobs:
       id: compile
       run: |
         cd lede
-        make -j8 V=s
+        make -j16 V=s
         echo "::set-output name=status::success"
 
     - name: Upload bin directory
