@@ -53,7 +53,7 @@ jobs:
 #        curl -fsSL https://raw.githubusercontent.com/P3TERX/dotfiles/master/.bashrc >> ~/.bashrc
 
     - name: source code
-     run: |
+      run: |
         git clone https://github.com/coolsnowwolf/lede
         cd lede
         ./scripts/feeds update -a
