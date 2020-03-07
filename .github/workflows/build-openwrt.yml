@@ -64,19 +64,19 @@ jobs:
 #        [ -e files ] && mv files lede/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
 #        chmod +x $DIY_SH
-#        cd lede
+        cd lede
 #        ../$DIY_SH
 
     - name: SSH connection to Actions
       uses: P3TERX/debugger-action@master
       if: env.SSH_ACTIONS == 'true'
 
-    - name: Compile the firmware
-      id: compile
-      run: |
-        cd lede
-        make -j1 V=s
-        echo "::set-output name=status::success"
+#    - name: Compile the firmware
+#      id: compile
+#      run: |
+#        cd lede
+#        make -j2 V=s
+#        echo "::set-output name=status::success"
 
     - name: Upload bin directory
       uses: actions/upload-artifact@master
