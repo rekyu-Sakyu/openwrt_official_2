@@ -59,10 +59,10 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-#    - name: Load custom configuration
-#      run: |
+    - name: Load custom configuration
+      run: |
 #        [ -e files ] && mv files lede/files
-#        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
 #        chmod +x $DIY_SH
 #        cd lede
 #        ../$DIY_SH
