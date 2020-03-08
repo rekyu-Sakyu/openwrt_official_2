@@ -26,7 +26,7 @@ env:
   REPO_BRANCH: master
   CONFIG_FILE: .config
   DIY_SH: diy.sh
-  SSH_ACTIONS: true
+  SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
@@ -75,6 +75,7 @@ jobs:
       id: compile
       run: |
         cd lede
+        make defconfig
         make -j2 V=s
         echo "::set-output name=status::success"
 
