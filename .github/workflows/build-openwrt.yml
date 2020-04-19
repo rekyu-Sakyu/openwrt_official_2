@@ -57,20 +57,20 @@ jobs:
 #        curl -fsSL https://raw.githubusercontent.com/P3TERX/dotfiles/master/.bashrc >> ~/.bashrc
 
     - name: Clone source code
-      run: git clone --depth 1 https://github.com/coolsnowwolf/lede
+      run: git clone --depth 1 https://github.com/coolsnowwolf/lede openwrt
 
     - name: Update feeds
-      run: cd lede && ./scripts/feeds update -a
+      run: cd openwrt && ./scripts/feeds update -a
 
     - name: Install feeds
-      run: cd lede && ./scripts/feeds install -a
+      run: cd openwrt && ./scripts/feeds install -a
       
     - name: Load custom configuration
       run: |
-        [ -e files ] && mv files lede/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
+        [ -e files ] && mv files openwrt/files
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
 #        chmod +x $DIY_SH
-#        cd lede
+#        cd openwrt
 #        ../$DIY_SH
 
     - name: SSH connection to Actions
@@ -80,7 +80,7 @@ jobs:
     - name: Download package
       id: package
       run: |
-        cd lede
+        cd openwrt
         make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
@@ -89,7 +89,7 @@ jobs:
     - name: Compile the firmware
       id: compile
       run: |
-        cd lede
+        cd openwrt
         echo -e "$(nproc) thread compile"
         make -j$(($(nproc) + 1)) V=s
         echo "::set-output name=status::success"
@@ -99,13 +99,13 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_directory
-        path: lede/bin
+        path: openwrt/bin
 
     - name: Organize files
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd lede/bin/targets/*/*
+        cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
