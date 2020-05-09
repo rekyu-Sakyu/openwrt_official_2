@@ -60,7 +60,11 @@ jobs:
       run: git clone --depth 1 https://github.com/coolsnowwolf/lede openwrt
 
     - name: Update feeds
-      run: cd openwrt && ./scripts/feeds update -a
+      run: |
+        cd openwrt && ./scripts/feeds update -a
+        cd package
+        git clone https://github.com/mchome/openwrt-dogcom
+        git clone https://github.com/mchome/luci-app-dogcom
 
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
