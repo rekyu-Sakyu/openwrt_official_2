@@ -58,7 +58,9 @@ jobs:
 
     - name: Update feeds
       run: |
-        cd openwrt && ./scripts/feeds update -a
+        cd openwrt
+        echo src-git helloworld https://github.com/fw876/helloworld >> feeds.conf.default
+        ./scripts/feeds update -a
         cd package
         git clone https://github.com/mchome/openwrt-dogcom
         git clone https://github.com/mchome/luci-app-dogcom
